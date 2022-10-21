@@ -4,21 +4,14 @@ using UnityEngine;
 
 public class RandomMove : MonoBehaviour
 {
-    public int maxVelocity;
-    private bool bSpawn = true;
+    int maxVelocity;
+    Rigidbody2D rb;
 
-    void Update()
+    public void Start()
     {
-        if (bSpawn)
-        {
-            OnSpawn();
-            bSpawn = false;
-        }
-    }
-
-    public void OnSpawn()
-    {
-        this.GetComponent<Rigidbody2D>().velocity = new Vector2(Random.Range(-maxVelocity, maxVelocity), Random.Range(maxVelocity, -maxVelocity));
+        maxVelocity = GameController.instance.maxVelocity;
+        rb = GetComponent<Rigidbody2D>();
+        rb.velocity = new Vector2(Random.Range(-maxVelocity, maxVelocity), Random.Range(maxVelocity, -maxVelocity));
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -29,15 +22,15 @@ public class RandomMove : MonoBehaviour
             {
                 case "Bottom":
                 case "Top":
-                    this.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(gameObject.transform.position.x, -gameObject.transform.position.y);
+                    rb.velocity = new Vector2(gameObject.transform.position.x, -gameObject.transform.position.y);
                     break;
                 case "Left":
                 case "Right":
-                    this.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(-gameObject.transform.position.x, gameObject.transform.position.y);
+                    rb.velocity = new Vector2(-gameObject.transform.position.x, gameObject.transform.position.y);
                     break;
             }
         }
-        else if (collision.tag == "Bullet" || collision.tag == "Bullet1" || collision.tag == "split")
+        else if (collision.tag == "Bullet" || collision.tag == "Bullet1" || collision.tag == "Bullet2" || collision.tag == "split")
         {
             if (this.gameObject.transform.localScale.x > 0.3)
             {

@@ -8,14 +8,15 @@ using TMPro;
 public class GameController : MonoBehaviour
 {
     public static GameController instance;
-    public Vector3 spwanValues;
+    public GameObject spwanValues;
     public GameObject playerSpawnPos;
     public List<GameObject> enemies = new List<GameObject>();
+    public List<GameObject> collectable = new List<GameObject>();
     public GameObject player;
     public float StartWait;
     public float WaveWait;
     public int enemyCount;
-    public float maxVelocity;
+    public int maxVelocity;
     public int nbLives;
     private int iScore;
 
@@ -51,7 +52,7 @@ public class GameController : MonoBehaviour
         {
             for (int i = 0; i < enemyCount; i++)
             {
-                Vector3 spawnPosition = new Vector3(Random.Range(-spwanValues.x, spwanValues.x), spwanValues.y, spwanValues.z);
+                Vector3 spawnPosition = new Vector3(Random.Range(-spwanValues.transform.position.x, spwanValues.transform.position.x), spwanValues.transform.position.y, spwanValues.transform.position.z);
                 Quaternion spawnRotation = Quaternion.identity;
                 GameObject temp = Instantiate(enemies[Random.Range(0,enemies.Count)], spawnPosition, spawnRotation);
                 float rd = Random.Range(1, 0.3f);

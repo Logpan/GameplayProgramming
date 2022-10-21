@@ -12,6 +12,7 @@ TagManager:
   - Choice1
   - Bullet2
   - Choice2
+  - Choice3
   layers:
   - Default
   - TransparentFX

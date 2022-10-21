@@ -23,6 +23,6 @@ public class Collectable : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(new Vector3(0, 0, 20) * 0.25f);
+        transform.Rotate(new Vector3(0, 0, 20) * Time.deltaTime);
     }
 }

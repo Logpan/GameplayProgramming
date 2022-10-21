@@ -4,21 +4,14 @@ using UnityEngine;
 
 public class Vertical : MonoBehaviour
 {
-    public int maxVelocity;
-    private bool bSpawn = true;
+    int maxVelocity;
+    Rigidbody2D rb;
 
-    void Update()
+    public void Start()
     {
-        if(bSpawn)
-        {
-            OnSpawn();
-            bSpawn = false;
-        }
-    }
-
-    public void OnSpawn()
-    {
-        this.GetComponent<Rigidbody2D>().velocity = new Vector2(0, Random.Range(-maxVelocity, -1));
+        maxVelocity = GameController.instance.maxVelocity;
+        rb = GetComponent<Rigidbody2D>();
+        rb.velocity = new Vector2(0, Random.Range(-maxVelocity, -1));
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -29,7 +22,7 @@ public class Vertical : MonoBehaviour
             {
                 case "Bottom":
                     this.gameObject.transform.position = new Vector3(this.gameObject.transform.position.x, 4.5f, 0);
-                    this.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, Random.Range(-maxVelocity, -1));
+                    rb.velocity = new Vector2(0, Random.Range(-maxVelocity, -1));
                     break;
             }
         }
@@ -46,13 +39,11 @@ public class Vertical : MonoBehaviour
 
     public void split(GameObject enemy)
     {
-        Vector2 velocity = new Vector2(Random.Range(maxVelocity, -maxVelocity), Random.Range(-maxVelocity, maxVelocity));
         GameObject split1 = Instantiate(enemy, gameObject.transform.position, Quaternion.identity);
         split1.transform.localScale = new Vector3(this.gameObject.transform.localScale.x / 2, this.gameObject.transform.localScale.y / 2, this.gameObject.transform.localScale.z / 2);
-        split1.GetComponent<Rigidbody2D>().velocity = velocity;
+
         GameObject split2 = Instantiate(enemy, gameObject.transform.position + new Vector3(0.01f, 0.01f, 0.01f), Quaternion.identity);
         split2.transform.localScale = new Vector3(this.gameObject.transform.localScale.x / 2, this.gameObject.transform.localScale.y / 2, this.gameObject.transform.localScale.z / 2);
-        split2.GetComponent<Rigidbody2D>().velocity = velocity;
 
     }
 }

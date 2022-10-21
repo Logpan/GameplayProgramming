@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "Choice1")
+        if (collision.tag == "Choice1")
         {
             Destroy(collision.gameObject);
             StartCoroutine(Choice(1));
@@ -70,6 +70,11 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(collision.gameObject);
             StartCoroutine(Choice(2));
+        }
+        else if (collision.tag == "Choice3")
+        {
+            Destroy(collision.gameObject);
+            transform.Find("Shield").gameObject.SetActive(true);
         }
     }
 
