@@ -12,12 +12,14 @@ public class GameController : MonoBehaviour
     public GameObject playerSpawnPos;
     public List<GameObject> enemies = new List<GameObject>();
     public List<GameObject> collectable = new List<GameObject>();
+    public GameObject ammo;
     public GameObject player;
     public float StartWait;
     public float WaveWait;
     public int enemyCount;
     public int maxVelocity;
     public int nbLives;
+    public int nbAmmo = 30;
     private int iScore;
 
 
@@ -25,6 +27,7 @@ public class GameController : MonoBehaviour
     public Canvas EndScreen;
     public TextMeshProUGUI endScore;
     public TextMeshProUGUI lives;
+    public TextMeshProUGUI txtAmmo;
     public Button btnRetry;
 
     void Awake()
@@ -33,6 +36,8 @@ public class GameController : MonoBehaviour
         player = Instantiate(player, playerSpawnPos.transform.position, Quaternion.identity );
         score.gameObject.SetActive(true);
         lives.gameObject.SetActive(true);
+        txtAmmo.gameObject.SetActive(true);
+        txtAmmo.text = "Ammo : " + nbAmmo;
         score.text = "Score : 0";
         lives.text = "Lives : " + nbLives;
         endScore.text = score.text;
@@ -98,6 +103,6 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        txtAmmo.text = "Ammo : " + nbAmmo;
     }
 }

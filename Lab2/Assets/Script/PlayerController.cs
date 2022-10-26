@@ -32,30 +32,33 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator Fire()
     {
-        switch(iBulletChoice)
+        if(GameController.instance.nbAmmo > 0)
         {
-            case 0:
-            case 1:
-                Vector3 bulletPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + transform.localScale.x + 0.1f, 0);
-                GameObject bullet = Instantiate(Bullet[iBulletChoice], bulletPosition, Quaternion.identity);
-                Destroy(bullet, 2f);
-                break;
-            case 2:
-                Vector3 bulletLeftPosition = new Vector3(gameObject.transform.position.x - 0.5f, gameObject.transform.position.y + transform.localScale.x + 0.1f, 0);
-                GameObject bulletLeft = Instantiate(Bullet[iBulletChoice], bulletLeftPosition, Quaternion.identity);
-                
-                Vector3 bulletRightPosition = new Vector3(gameObject.transform.position.x + 0.5f, gameObject.transform.position.y + transform.localScale.x + 0.1f, 0);
-                GameObject bulletRight = Instantiate(Bullet[iBulletChoice], bulletRightPosition, Quaternion.identity);
+            switch (iBulletChoice)
+            {
+                case 0:
+                case 1:
+                    Vector3 bulletPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + transform.localScale.x + 0.1f, 0);
+                    GameObject bullet = Instantiate(Bullet[iBulletChoice], bulletPosition, Quaternion.identity);
+                    Destroy(bullet, 2f);
+                    break;
+                case 2:
+                    Vector3 bulletLeftPosition = new Vector3(gameObject.transform.position.x - 0.5f, gameObject.transform.position.y + transform.localScale.x + 0.1f, 0);
+                    GameObject bulletLeft = Instantiate(Bullet[iBulletChoice], bulletLeftPosition, Quaternion.identity);
 
-                Vector3 bulletMidPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + transform.localScale.x + 0.1f, 0);
-                GameObject bulletMid = Instantiate(Bullet[iBulletChoice], bulletMidPosition, Quaternion.identity);
-                
-                Destroy(bulletLeft, 2f);
-                Destroy(bulletRight, 2f);
-                Destroy(bulletMid, 2f);
-                break;
+                    Vector3 bulletRightPosition = new Vector3(gameObject.transform.position.x + 0.5f, gameObject.transform.position.y + transform.localScale.x + 0.1f, 0);
+                    GameObject bulletRight = Instantiate(Bullet[iBulletChoice], bulletRightPosition, Quaternion.identity);
+
+                    Vector3 bulletMidPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + transform.localScale.x + 0.1f, 0);
+                    GameObject bulletMid = Instantiate(Bullet[iBulletChoice], bulletMidPosition, Quaternion.identity);
+
+                    Destroy(bulletLeft, 2f);
+                    Destroy(bulletRight, 2f);
+                    Destroy(bulletMid, 2f);
+                    break;
+            }
+            GameController.instance.nbAmmo--;
         }
-        
         yield return new WaitForSeconds(0.5f);
     }
 
@@ -75,6 +78,13 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(collision.gameObject);
             transform.Find("Shield").gameObject.SetActive(true);
+            transform.Find("Shield").gameObject.transform.Find("ShieldBreak").gameObject.SetActive(false);
+        }
+        else if (collision.tag == "Ammo")
+        {
+            Destroy(collision.gameObject);
+            if(GameController.instance.nbAmmo < 100)
+                GameController.instance.nbAmmo += 10;
         }
     }
 

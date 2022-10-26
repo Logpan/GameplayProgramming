@@ -13,6 +13,7 @@ TagManager:
   - Bullet2
   - Choice2
   - Choice3
+  - Ammo
   layers:
   - Default
   - TransparentFX
